@@ -23,11 +23,14 @@ class Observable {
 // Usage
 
 let count = 0;
-const observable = new Observable().subscribe(char => {
+
+const observable = new Observable().subscribe(observer);
+
+function observer(char) {
   process.stdout.write(char);
   count++;
   if (count > 50) {
     observable.complete();
     process.stdout.write('\n');
   }
-});
+}
