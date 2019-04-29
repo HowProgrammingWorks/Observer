@@ -5,18 +5,16 @@ const randomChar = () => String
 
 class Observable {
   constructor() {
-    this.timer = setInterval(() => {
-      if (!this.onData) return;
+    this.observer = null;
+    setInterval(() => {
+      if (!this.observer) return;
       const char = randomChar();
-      this.onData(char);
+      this.observer(char);
     }, 200);
   }
-  subscribe(onData) {
-    this.onData = onData;
+  subscribe(observer) {
+    this.observer = observer;
     return this;
-  }
-  complete() {
-    clearInterval(this.timer);
   }
 }
 
@@ -30,7 +28,9 @@ function observer(char) {
   process.stdout.write(char);
   count++;
   if (count > 50) {
-    observable.complete();
     process.stdout.write('\n');
+    process.exit(0);
   }
 }
+
+console.dir({ observer, observable });

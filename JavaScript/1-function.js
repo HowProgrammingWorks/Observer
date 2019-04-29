@@ -5,11 +5,10 @@ const randomChar = () => String
 
 const subscribe = observer => {
   const observable = { observer };
-  const timer = setInterval(() => {
+  setInterval(() => {
     const char = randomChar();
     observer(char);
   }, 200);
-  observable.complete = () => clearInterval(timer);
   return observable;
 };
 
@@ -22,7 +21,9 @@ function observer(char) {
   process.stdout.write(char);
   count++;
   if (count > 50) {
-    observable.complete();
     process.stdout.write('\n');
+    process.exit(0);
   }
 }
+
+console.dir({ observer, observable });
