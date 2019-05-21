@@ -14,6 +14,7 @@ class CharStream { // Observable
       ee.emit('char', char);
     }, 200);
   }
+
   complete() {
     clearInterval(this.timer);
   }

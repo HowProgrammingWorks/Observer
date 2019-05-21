@@ -5,10 +5,12 @@ class Observable {
     this.observers = [];
     this.operators = [];
   }
+
   subscribe(observer) {
     this.observers.push(observer);
     return this;
   }
+
   notify(data) {
     if (this.observers.length === 0) return;
     for (const operator of this.operators) {
@@ -23,10 +25,12 @@ class Observable {
       observer(data);
     }
   }
+
   filter(predicate) {
     this.operators.push({ name: 'filter', fn: predicate });
     return this;
   }
+
   map(callback) {
     this.operators.push({ name: 'map', fn: callback });
     return this;
@@ -38,23 +42,24 @@ class Observable {
 const randomChar = () => String
   .fromCharCode(Math.floor((Math.random() * 25) + 97));
 
-let count = 0;
-
 const observable = new Observable()
   .filter(char => !'aeiou'.includes(char))
-  .map(char => char.toUpperCase())
-  .subscribe(observer);
+  .map(char => char.toUpperCase());
 
 const timer = setInterval(() => {
   const char = randomChar();
   observable.notify(char);
 }, 200);
 
-function observer(char) {
+let count = 0;
+
+const observer = char => {
   process.stdout.write(char);
   count++;
   if (count > 50) {
     clearInterval(timer);
     process.stdout.write('\n');
   }
-}
+};
+
+observable.subscribe(observer);

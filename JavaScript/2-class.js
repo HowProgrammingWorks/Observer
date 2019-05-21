@@ -12,6 +12,7 @@ class Observable {
       this.observer(char);
     }, 200);
   }
+
   subscribe(observer) {
     this.observer = observer;
     return this;
@@ -22,15 +23,15 @@ class Observable {
 
 let count = 0;
 
-const observable = new Observable().subscribe(observer);
-
-function observer(char) {
+const observer = char => {
   process.stdout.write(char);
   count++;
   if (count > 50) {
     process.stdout.write('\n');
     process.exit(0);
   }
-}
+};
+
+const observable = new Observable().subscribe(observer);
 
 console.dir({ observer, observable });

@@ -6,16 +6,19 @@ class Observable {
     this.operators = [];
     if (subscribe) setTimeout(subscribe, 0, this);
   }
+
   subscribe(observer) {
     this.observers.push(observer);
     return this;
   }
+
   pipe(...args) {
     this.operators.push(...args);
     const destination = new Observable();
     this.subscribe(data => destination.next(data));
     return destination;
   }
+
   next(data) {
     if (this.observers.length === 0) return;
     for (const operator of this.operators) {
@@ -52,17 +55,17 @@ const destination = source.pipe(
   map(char => char.toUpperCase())
 );
 
-destination.subscribe(observer);
-
 let count = 0;
 
-function observer(char) {
+const observer = char => {
   process.stdout.write(char);
   count++;
   if (count > 50) {
     process.stdout.write('\n');
     process.exit(0);
   }
-}
+};
+
+destination.subscribe(observer);
 
 console.dir({ observer, source, destination });
