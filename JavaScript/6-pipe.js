@@ -14,7 +14,7 @@ class Observable {
   pipe(...args) {
     this.operators.push(...args);
     const destination = new Observable();
-    this.subscribe(data => destination.notify(data));
+    this.subscribe((data) => destination.notify(data));
     return destination;
   }
 
@@ -34,8 +34,8 @@ class Observable {
   }
 }
 
-const filter = predicate => ({ name: 'filter', fn: predicate });
-const map = callback => ({ name: 'map', fn: callback });
+const filter = (predicate) => ({ name: 'filter', fn: predicate });
+const map = (callback) => ({ name: 'map', fn: callback });
 
 // Usage
 
@@ -45,13 +45,13 @@ const randomChar = () => String
 const source = new Observable();
 
 const destination = source.pipe(
-  filter(char => !'aeiou'.includes(char)),
-  map(char => char.toUpperCase())
+  filter((char) => !'aeiou'.includes(char)),
+  map((char) => char.toUpperCase())
 );
 
 let count = 0;
 
-const observer = char => {
+const observer = (char) => {
   process.stdout.write(char);
   count++;
   if (count > 50) {

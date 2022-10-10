@@ -23,7 +23,7 @@ class Observable {
 
 let count = 0;
 
-const observer = char => {
+const observer = (char) => {
   process.stdout.write(char);
   count++;
   if (count > 50) {

@@ -3,7 +3,7 @@
 const randomChar = () => String
   .fromCharCode(Math.floor((Math.random() * 25) + 97));
 
-const subscribe = observer => {
+const subscribe = (observer) => {
   const observable = { observer };
   setInterval(() => {
     const char = randomChar();
@@ -16,7 +16,7 @@ const subscribe = observer => {
 
 let count = 0;
 
-const observer = char => {
+const observer = (char) => {
   process.stdout.write(char);
   count++;
   if (count > 50) {

@@ -43,8 +43,8 @@ const randomChar = () => String
   .fromCharCode(Math.floor((Math.random() * 25) + 97));
 
 const observable = new Observable()
-  .filter(char => !'aeiou'.includes(char))
-  .map(char => char.toUpperCase());
+  .filter((char) => !'aeiou'.includes(char))
+  .map((char) => char.toUpperCase());
 
 const timer = setInterval(() => {
   const char = randomChar();
@@ -53,7 +53,7 @@ const timer = setInterval(() => {
 
 let count = 0;
 
-const observer = char => {
+const observer = (char) => {
   process.stdout.write(char);
   count++;
   if (count > 50) {
