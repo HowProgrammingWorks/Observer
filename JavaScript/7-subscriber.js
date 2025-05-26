@@ -38,8 +38,6 @@ class Observable {
 const filter = (predicate) => ({ name: 'filter', fn: predicate });
 const map = (callback) => ({ name: 'map', fn: callback });
 
-// Usage
-
 const randomChar = () =>
   String.fromCharCode(Math.floor(Math.random() * 25 + 97));
 

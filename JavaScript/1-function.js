@@ -16,8 +16,6 @@ const subscribe = (observer) => {
   return { unsubscribe };
 };
 
-// Usage
-
 const createObserver = () => {
   let count = 0;
   return (char) => {

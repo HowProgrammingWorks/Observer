@@ -1,7 +1,5 @@
 'use strict';
 
-// Base classes
-
 class Observable {
   constructor() {
     this.observers = [];
@@ -30,8 +28,6 @@ class Observer {
     throw new Error('Observer.update is not implemented');
   }
 }
-
-// Usage
 
 const randomChar = () =>
   String.fromCharCode(Math.floor(Math.random() * 25 + 97));

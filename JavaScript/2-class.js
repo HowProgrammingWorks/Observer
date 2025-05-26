@@ -25,8 +25,6 @@ class Observable {
   }
 }
 
-// Usage
-
 const createObserver = () => {
   let count = 0;
   return (char) => {
