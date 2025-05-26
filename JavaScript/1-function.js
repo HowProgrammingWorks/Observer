@@ -1,30 +1,36 @@
 'use strict';
 
-const randomChar = () => String
-  .fromCharCode(Math.floor((Math.random() * 25) + 97));
+const randomChar = () =>
+  String.fromCharCode(Math.floor(Math.random() * 25 + 97));
 
 const subscribe = (observer) => {
-  const observable = { observer };
-  setInterval(() => {
+  let timer = setInterval(() => {
     const char = randomChar();
     observer(char);
   }, 200);
-  return observable;
+  const unsubscribe = () => {
+    if (!timer) return;
+    clearInterval(timer);
+    timer = null;
+  };
+  return { unsubscribe };
 };
 
 // Usage
 
-let count = 0;
-
-const observer = (char) => {
-  process.stdout.write(char);
-  count++;
-  if (count > 50) {
-    process.stdout.write('\n');
-    process.exit(0);
-  }
+const createObserver = () => {
+  let count = 0;
+  return (char) => {
+    process.stdout.write(char);
+    count++;
+    if (count > 50) {
+      process.stdout.write('\n');
+      process.exit(0);
+    }
+  };
 };
 
+const observer = createObserver();
 const observable = subscribe(observer);
 
 console.dir({ observer, observable });

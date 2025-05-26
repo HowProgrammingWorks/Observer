@@ -40,8 +40,8 @@ const map = (callback) => ({ name: 'map', fn: callback });
 
 // Usage
 
-const randomChar = () => String
-  .fromCharCode(Math.floor((Math.random() * 25) + 97));
+const randomChar = () =>
+  String.fromCharCode(Math.floor(Math.random() * 25 + 97));
 
 const source = new Observable((subscriber) => {
   setInterval(() => {
@@ -52,20 +52,22 @@ const source = new Observable((subscriber) => {
 
 const destination = source.pipe(
   filter((char) => !'aeiou'.includes(char)),
-  map((char) => char.toUpperCase())
+  map((char) => char.toUpperCase()),
 );
 
-let count = 0;
-
-const observer = (char) => {
-  process.stdout.write(char);
-  count++;
-  if (count > 50) {
-    process.stdout.write('\n');
-    process.exit(0);
-  }
+const createObserver = () => {
+  let count = 0;
+  return (char) => {
+    process.stdout.write(char);
+    count++;
+    if (count > 50) {
+      process.stdout.write('\n');
+      process.exit(0);
+    }
+  };
 };
 
+const observer = createObserver();
 destination.subscribe(observer);
 
 console.dir({ observer, source, destination });

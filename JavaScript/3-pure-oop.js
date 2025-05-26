@@ -33,20 +33,22 @@ class Observer {
 
 // Usage
 
-const randomChar = () => String
-  .fromCharCode(Math.floor((Math.random() * 25) + 97));
+const randomChar = () =>
+  String.fromCharCode(Math.floor(Math.random() * 25 + 97));
 
 class CharStream extends Observable {
-  constructor() {
+  constructor(interval) {
     super();
     this.timer = setInterval(() => {
       const char = randomChar();
       this.notify(char);
-    }, 200);
+    }, interval);
   }
 
   complete() {
+    if (!this.timer) return;
     clearInterval(this.timer);
+    this.timer = null;
   }
 }
 
@@ -68,5 +70,6 @@ class CharStreamObserver extends Observer {
 }
 
 const observer = new CharStreamObserver();
-const observable = new CharStream().subscribe(observer);
+const observable = new CharStream(200);
+observable.subscribe(observer);
 console.dir({ observer, observable });

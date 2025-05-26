@@ -39,27 +39,29 @@ class Observable {
 
 // Usage
 
-const randomChar = () => String
-  .fromCharCode(Math.floor((Math.random() * 25) + 97));
+const randomChar = () =>
+  String.fromCharCode(Math.floor(Math.random() * 25 + 97));
 
 const observable = new Observable()
   .filter((char) => !'aeiou'.includes(char))
   .map((char) => char.toUpperCase());
 
-const timer = setInterval(() => {
+setInterval(() => {
   const char = randomChar();
   observable.notify(char);
 }, 200);
 
-let count = 0;
-
-const observer = (char) => {
-  process.stdout.write(char);
-  count++;
-  if (count > 50) {
-    clearInterval(timer);
-    process.stdout.write('\n');
-  }
+const createObserver = () => {
+  let count = 0;
+  return (char) => {
+    process.stdout.write(char);
+    count++;
+    if (count > 50) {
+      process.stdout.write('\n');
+      process.exit(0);
+    }
+  };
 };
 
+const observer = createObserver();
 observable.subscribe(observer);
